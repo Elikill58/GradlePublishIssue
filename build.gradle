@@ -24,8 +24,8 @@ publishing {
             artifact("build/libs/MyProject-1.0-SNAPSHOT.jar") {
                builtBy shadowJar
             }
-            groupId 'com.example'
-            artifactId 'myproject'
+            groupId 'com.elikill58'
+            artifactId 'gradlepublishissue'
         }
     }
 }
