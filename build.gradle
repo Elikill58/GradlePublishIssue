@@ -1,0 +1,47 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+plugins {
+    id 'java-library'
+    id "maven-publish"
+    id 'io.github.goooler.shadow' version '8.1.7'
+}
+
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+
+publishing {
+    repositories {
+        maven {
+            name = "github"
+            url = uri("https://maven.pkg.github.com/Elikill58/GradlePublishIssue")
+            credentials(HttpHeaderCredentials);
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            artifact("build/libs/MyProject-1.0-SNAPSHOT.jar") {
+               builtBy shadowJar
+            }
+            groupId 'com.example'
+            artifactId 'myproject'
+        }
+    }
+}
+
+archivesBaseName = 'MyProject'
+
+sourceSets.main {
+    java.srcDirs = ['src']
+    resources.srcDirs = ['resources']
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+shadowJar {
+    archiveBaseName.set('MyProject')
+    archiveClassifier.set(null)
+}
+
+build.dependsOn shadowJar
