@@ -8,6 +8,12 @@ plugins {
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = configurations.compileClasspath
+    destinationDir = file("$buildDir/docs/javadoc")
+}
+
 publishing {
     repositories {
         maven {
@@ -38,12 +44,6 @@ archivesBaseName = 'MyProject'
 sourceSets.main {
     java.srcDirs = ['src']
     resources.srcDirs = ['resources']
-}
-
-task generateJavadoc(type: Javadoc) {
-    source = sourceSets.main.allJava
-    classpath = configurations.compileClasspath
-    destinationDir = file("$buildDir/docs/javadoc")
 }
 
 compileJava.options.encoding = 'UTF-8'
