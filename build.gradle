@@ -14,6 +14,23 @@ task generateJavadoc(type: Javadoc) {
     destinationDir = file("$buildDir/docs/javadoc")
 }
 
+archivesBaseName = 'MyProject'
+
+sourceSets.main {
+    java.srcDirs = ['src']
+    resources.srcDirs = ['resources']
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+shadowJar {
+    archiveBaseName.set('MyProject')
+    archiveClassifier.set(null)
+}
+
+build.dependsOn shadowJar
+publish.dependsOn generateJavadoc
+
 publishing {
     repositories {
         maven {
@@ -31,27 +48,10 @@ publishing {
                builtBy shadowJar
             }
             artifact tasks.generateJavadoc {
-                archiveClassifier "javadoc"
+                classifier "javadoc"
             }
             groupId 'com.elikill58'
             artifactId 'gradlepublishissue'
         }
     }
 }
-
-archivesBaseName = 'MyProject'
-
-sourceSets.main {
-    java.srcDirs = ['src']
-    resources.srcDirs = ['resources']
-}
-
-compileJava.options.encoding = 'UTF-8'
-
-shadowJar {
-    archiveBaseName.set('MyProject')
-    archiveClassifier.set(null)
-}
-
-build.dependsOn shadowJar
-publish.dependsOn generateJavadoc
