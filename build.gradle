@@ -54,3 +54,4 @@ shadowJar {
 }
 
 build.dependsOn shadowJar
+publish.dependsOn generateJavadoc
