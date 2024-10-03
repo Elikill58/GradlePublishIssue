@@ -31,7 +31,7 @@ publishing {
                builtBy shadowJar
             }
             artifact tasks.generateJavadoc {
-                classifier "javadoc"
+                archiveClassifier "javadoc"
             }
             groupId 'com.elikill58'
             artifactId 'gradlepublishissue'
