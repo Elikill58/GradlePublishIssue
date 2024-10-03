@@ -24,6 +24,9 @@ publishing {
             artifact("build/libs/MyProject-1.0-SNAPSHOT.jar") {
                builtBy shadowJar
             }
+            artifact tasks.generateJavadoc {
+                classifier "javadoc"
+            }
             groupId 'com.elikill58'
             artifactId 'gradlepublishissue'
         }
@@ -35,6 +38,12 @@ archivesBaseName = 'MyProject'
 sourceSets.main {
     java.srcDirs = ['src']
     resources.srcDirs = ['resources']
+}
+
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    classpath = configurations.compileClasspath
+    destinationDir = file("$buildDir/docs/javadoc")
 }
 
 compileJava.options.encoding = 'UTF-8'
